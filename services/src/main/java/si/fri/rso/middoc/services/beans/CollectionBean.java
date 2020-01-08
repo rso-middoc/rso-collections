@@ -145,4 +145,45 @@ public class CollectionBean {
             em.getTransaction().rollback();
     }
 
+    public String getCollectionTitle(Integer id) {
+
+        CollectionEntity collectionEntity = em.find(CollectionEntity.class, id);
+
+        if (collectionEntity == null) {
+            throw new NotFoundException();
+        }
+
+        return CollectionsConverter.toDto(collectionEntity).getTitle();
+    }
+
+    public String getSimilarCollectionTitles(Integer id) {
+
+        CollectionEntity collectionEntity = em.find(CollectionEntity.class, id);
+
+        if (collectionEntity == null) {
+            throw new NotFoundException();
+        }
+
+        String type = collectionEntity.getType();
+
+        TypedQuery<CollectionEntity> query = em.createNamedQuery("CollectionEntity.getType",
+                CollectionEntity.class);
+
+        List<CollectionEntity> results = query.setParameter("type", type).getResultList();
+
+        String titles = "";
+        for (CollectionEntity ce : results) {
+            if (ce.equals(collectionEntity))
+                continue;
+
+            if (titles.equals(""))
+                titles = ce.getTitle();
+            else
+                titles = titles + ", " + ce.getTitle();
+        }
+
+        return titles;
+
+    }
+
 }

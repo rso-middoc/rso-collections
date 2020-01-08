@@ -84,4 +84,32 @@ public class CollectionsResource {
         }
     }
 
+    @Produces(MediaType.TEXT_PLAIN)
+    @GET
+    @Path("/{collectionId}/title")
+    public Response getCollectionTitle(@PathParam("collectionId") Integer collectionId) {
+
+        String title = collectionBean.getCollectionTitle(collectionId);
+
+        if (title == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.status(Response.Status.OK).entity(title).build();
+    }
+
+    @Produces(MediaType.TEXT_PLAIN)
+    @GET
+    @Path("/{collectionId}/similar")
+    public Response getSimilarCollectionTitles(@PathParam("collectionId") Integer collectionId) {
+
+        String titles = collectionBean.getSimilarCollectionTitles(collectionId);
+
+        if (titles == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.status(Response.Status.OK).entity(titles).build();
+    }
+
 }

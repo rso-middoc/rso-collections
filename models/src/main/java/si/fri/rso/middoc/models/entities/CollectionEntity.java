@@ -7,7 +7,8 @@ import java.time.Instant;
 @Table(name = "collections")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "CollectionEntity.getAll", query = "SELECT it FROM CollectionEntity it")
+                @NamedQuery(name = "CollectionEntity.getAll", query = "SELECT it FROM CollectionEntity it"),
+                @NamedQuery(name = "CollectionEntity.getType", query = "SELECT it FROM CollectionEntity it WHERE it.type = :type")
         })
 public class CollectionEntity {
 
