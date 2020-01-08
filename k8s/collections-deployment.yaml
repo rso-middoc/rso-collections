@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collections-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: collections
+  template:
+    metadata:
+      labels:
+        app: collections
+    spec:
+      containers:
+        - image: iramovs/rso-collections:1.0.0-SNAPSHOT-4.1
+          name: collections
+          env:
+            - name: KUMULUZEE_DISCOVERY_CLUSTER
+              value: cluster-1
+            - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+              value: http://10.11.245.103:2379
+            - name: KUMULUZEE_DISCOVERY_ETCD_USERNAME
+              value: root
+            - name: KUMULUZEE_DISCOVERY_ETCD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-pass
+                  key: ETCD_PASSWORD
+            - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+              value: http://10.11.245.103:2379
+            - name: KUMULUZEE_CONFIG_ETCD_USERNAME
+              value: root
+            - name: KUMULUZEE_CONFIG_ETCD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-pass
+                  key: ETCD_PASSWORD
+            - name: KUMULUZEE_SERVER_BASEURL
+              value: http://104.198.64.160:8080
+            - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+              value: jdbc:postgresql://104.154.164.136:5432/postgres
+            - name: KUMULUZEE_DATASOURCES0_USERNAME
+              value: postgres
+            - name: KUMULUZEE_DATASOURCES0_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pg-pass
+                  key: KUMULUZEE_DATASOURCES0_PASSWORD
+          ports:
+            - containerPort: 8080
+              name: server
+              protocol: TCP
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: collections
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: server
+  selector:
+    app: collections
