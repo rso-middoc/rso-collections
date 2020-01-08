@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/collections.iml" filepath="$PROJECT_DIR$/collections.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api/collections-api.iml" filepath="$PROJECT_DIR$/api/collections-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/collections-lib.iml" filepath="$PROJECT_DIR$/lib/collections-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/models/collections-models.iml" filepath="$PROJECT_DIR$/models/collections-models.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/collections-services.iml" filepath="$PROJECT_DIR$/services/collections-services.iml" />
+    </modules>
+  </component>
+</project>
