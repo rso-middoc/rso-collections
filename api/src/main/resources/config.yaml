@@ -16,6 +16,15 @@ kumuluzee:
   discovery:
     etcd:
       hosts: http://localhost:2379
+  metrics:
+    web-instrumentation:
+      - name: collections-endpoint
+        url-pattern: /v1/collections/*
+  health:
+    checks:
+      data-source-health-check:
+        type: liveness
+        jndi-name: jdbc/CollectionsDS
 
 configuration-properties:
   test-var:
